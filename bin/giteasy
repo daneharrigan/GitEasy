@@ -1,0 +1,37 @@
+#!/usr/bin/ruby
+
+path = File.dirname(__FILE__)+'/..'
+require "#{path}/lib/giteasy"
+Dir["#{path}/lib/plugins/*.rb"].each { |f| require f }
+
+nothing_to_commit = (`git status` =~ /nothing to commit/)
+unless nothing_to_commit
+  puts "\nYou need to commit your changes before doing anything else!\n\n"
+  exit
+end
+
+if ARGV.empty?
+  file_name = __FILE__.split('/').last
+  options = []
+
+  GitEasy.commands.each { |command, value| options << "#{command} <value>" }
+  options = options.join(' ')
+  
+  puts "\nSlow down there Tiger!!"
+  puts "Here is a list of the available options:"
+  puts "#{file_name} #{options}\n\n"
+  exit
+end
+
+parameters = {}
+first_command = nil
+
+ARGV.each do |param|
+  if GitEasy.commands.include? param
+    first_command = param unless first_command
+    index = ARGV.find_index(param)+1
+    parameters[param] = ARGV[index]
+  end
+end
+
+GitEasy.call(first_command, parameters)

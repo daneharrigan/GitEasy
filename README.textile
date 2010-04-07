@@ -1,0 +1,1 @@
+There are a few git practices that I'm trying to simplify for myself here.
