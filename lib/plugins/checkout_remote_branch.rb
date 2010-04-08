@@ -8,15 +8,7 @@ module GitEasy
       def self.call(parameters)
         branch_name = 'origin/'+parameters['--checkout-remote-branch']
 
-        system 'git fetch'
-        branches = `git branch -r`.split("\n")
-        remote_branches = []
-
-        branches.each do |line|
-          remote_branches << line.strip.sub('/\*/','')
-        end
-
-        unless remote_branches.include? branch_name
+        unless GitEasy.remote_branches.include? branch_name
           puts "\nThe #{branch_name} does not exist!\n\n"
           exit
         end
