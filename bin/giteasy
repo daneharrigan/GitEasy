@@ -4,7 +4,7 @@ path = File.dirname(__FILE__)+'/..'
 require "#{path}/lib/giteasy"
 Dir["#{path}/lib/plugins/*.rb"].each { |file| require file }
 
-nothing_to_commit = (`git status` =~ /nothing to commit/)
+nothing_to_commit = !(`git status` =~ /Changed but not updated/)
 unless nothing_to_commit
   puts "\nYou need to commit your changes before doing anything else!\n\n"
   exit
