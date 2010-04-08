@@ -13,7 +13,7 @@ module GitEasy
           exit
         end
 
-        system "git checkout -t #{branch_name}"
+        system "git checkout -b #{branch_name} -t origin/#{branch_name}"
       end
     end
   end
