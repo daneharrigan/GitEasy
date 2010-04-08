@@ -7,7 +7,7 @@ module GitEasy
 
       def self.call(parameters)
         puts "Your remote branches are:\n"
-        puts GitEasy.remote_branches.join("\n")
+        puts "  "+GitEasy.remote_branches.join("\n  ")
       end
     end
   end

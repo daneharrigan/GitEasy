@@ -13,16 +13,23 @@ module GitEasy
     @commands[mod.command] = mod
   end
 
-  def self.local_branches
-    
-  end
-
   def self.remote_branches
-    system 'git fetch'
+    system 'git fetch > /dev/null'
     branches = `git branch -r`.split("\n")
     branches.map do |line|
       line = line.split('->').last if line =~ /origin\/master/
       line.split('/').last.strip
+    end
+  end
+
+  def self.local_branches
+    branches = `git branch`.split("\n")
+    branches.map { |line| line.strip }
+  end
+
+  def self.current_branch
+    local_branches.each do |branch|
+      return branch.sub(/\*/,'').strip if branch =~ /\*/
     end
   end
 end
