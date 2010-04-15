@@ -6,7 +6,7 @@ module GitEasy
       end
 
       def self.call(parameters)
-        branch_name = parameters['--checkout-remote-branch']
+        branch_name = parameters[command]
 
         unless GitEasy.remote_branches.include? branch_name
           puts "\nThe #{branch_name} does not exist!\n\n"
