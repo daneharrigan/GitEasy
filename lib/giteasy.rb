@@ -5,6 +5,22 @@ module GitEasy
     @commands.keys
   end
 
+  # preferences can be stored in your .git/config file, following the normal
+  # precedence rules for same (put these in ~/.gitconfig for global options, etc)
+  #
+  # These preferences must be stored in a giteasy section of that file
+  #
+  # Sample
+  #[giteasy]
+  #  settingone = true
+  #  defaultremote = false
+  #
+  # preference keys can/should be determined by the command itself, with a few
+  # global command we'll use everywhere (the default remote name, for example)
+  def self.prefs(key)
+    system "git config --get giteasy.#{key}"
+  end
+
   def self.call(command, parameters)
     @commands[command].call(parameters)
   end
